@@ -1,0 +1,86 @@
+strlen()
+Devuelve la longitud de una cadena
+strlen("Hola"); // 4
+
+
+str_word_count()
+Cuenta las palabras en una cadena
+str_word_count("Hola mundo"); // 2
+
+
+strpos()
+Encuentra la primera posición de una subcadena
+strpos("Hola mundo", "mundo"); // 5
+
+strrpos()
+Encuentra la última posición
+strrpos("Hola hola", "hola"); // 5
+
+
+strtoupper() - Convierte a mayúsculas
+
+strtolower() - Convierte a minúsculas
+
+ucfirst() - Primera letra mayúscula
+
+ucwords() - Capitaliza cada palabra
+
+str_replace()
+Reemplaza texto dentro de una cadena
+str_replace("mundo", "PHP", "Hola mundo");
+// "Hola PHP"
+
+substr()
+Extrae una parte de la cadena
+substr("Hola mundo", 0, 4); // "Hola"
+substr("Hola mundo", 5); // "mundo"
+substr("Hola mundo", -5); // "mundo"
+
+trim()
+Elimina espacios al inicio y final de la cadena
+trim(" Hola "); // "Hola"
+
+ltrim: elimina soolo de la izquierda
+rtrim: dercha
+
+explode()
+Divide una cadena en un array usando un separador
+explode(" ", "Hola mundo PHP");
+// ["Hola", "mundo", "PHP"]
+
+
+implode()
+Une elementos de un array en una cadena
+implode("-", ["Hola", "mundo"]);
+// "Hola-mundo"
+
+str_split()
+Divide una cadena en caracteres o bloques
+str_split("Hola", 2);
+// ["Ho", "la"]
+
+str_contains()
+Verifica si contiene texto (PHP 8+)
+str_contains("Hola mundo", "mundo"); // true
+
+str_starts_with()
+Verifica si empieza con texto específico
+str_starts_with("Hola mundo", "Hola"); // true
+
+str_ends_with()
+
+strstr()
+Encuentra subcadena y devuelve desde ahí
+strstr("user@email.com", "@"); // "@email.com"
+
+
+Repetición y Relleno
+
+str_repeat() repite cadenas y str_pad() rellena con caracteres específicos
+str_repeat("Hola ", 3); // "Hola Hola Hola "
+str_pad("5", 3, "0", STR_PAD_LEFT); // "005"
+
+number_format() y sprintf() para formatear números y plantillas
+number_format(1234.5678, 2); // "1,234.57"
+sprintf("Hola %s, tienes %d años", "Juan", 25);
+

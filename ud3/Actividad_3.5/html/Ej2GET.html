@@ -1,0 +1,24 @@
+<html>
+
+<head>
+    <title>Formulario Ejercicio 2</title>
+</head>
+
+<body>
+    <form action="../Ej2ProcesaGET.php" method="get" enctype="multipart/form-data">
+        <fieldset>
+                <legend>Formulario</legend>
+                <label for="nombre">Nombre:</label><br>
+                <input type="text" id="nom" name="nombre" required><br><br>
+                Opcion Casilla Checkbox:<br>
+                <input type="checkbox" name="DWES">Desarrollo Web en Entorno Servidor</input><br>
+                <input type="checkbox" name="DWEC" value="DWEC">Desarrollo Web en Cliente</input><br><br>
+
+                <input type="radio" name="DWES1" value="DWES1">Desarrollo Entorno Servidor</input><br>
+                <input type="radio" name="DWEC2" value="DWEC2">Desarrollo Web en Cliente</input><br><br>
+                <button type="submit" name="enviar">Enviar</button>
+                <button type="reset">Limpiar</button>
+            </fieldset>
+    </form>
+</body>
+</html>

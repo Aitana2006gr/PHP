@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<!-- Desarrollo Web en Entorno Servidor- 
+ Ej: Validar datos en la misma página que el formulario-->
+<html>
+<!-- 2.- Crea un formulario HTML para introducir el nombre del alumno y a escoger entre el
+módulo “Desarrollo Web en Entorno Servidor” y “Desarrollo Web en Entorno Cliente”. Envía el
+resultado a la página “procesa.php”, que será la encargada de procesar los datos. Realiza la
+prueba con el método POST y GET.-->
+
+<head>
+    <meta charset="UTF-8">
+    <title>Ejercicio 2 - Formularios</title>
+</head>
+<body>
+<h3>Formulario con POST</h3>
+<form action="../Ej2.php" method="post">
+    Nombre: <input type="text" name="nombre"><br>
+    Edad: <input type="text" name="edad"><br>
+    Módulo:
+    <select name="modulo">
+        <option value="DWES">Desarrollo Web en Entorno Servidor</option>
+        <option value="DWEC">Desarrollo Web en Entorno Cliente</option>
+    </select>
+    <br><input type="submit" value="Enviar (POST)">
+</form>
+
+<h3>Formulario con GET</h3>
+<form action="../Ej2.php" method="get">
+    Nombre: <input type="text" name="nombre"><br>
+    Edad: <input type="text" name="edad"><br>
+    Módulo:
+    <select name="modulo">
+        <option value="DWES">Desarrollo Web en Entorno Servidor</option>
+        <option value="DWEC">Desarrollo Web en Entorno Cliente</option>
+    </select>
+    <br><input type="submit" value="Enviar (GET)">
+</form>
+</body>
+</html>
