@@ -1,5 +1,5 @@
 <?php
 interface Volador{
-    public function acelerar (float $acelerar);
+    public function acelerar ($velocidad);
 }
 ?>
