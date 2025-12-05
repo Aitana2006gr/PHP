@@ -29,18 +29,18 @@ abstract class ElementoVolador implements Volador {
     public function setAltitud($altitud){ $this->altitud = $altitud; }
     public function setVelocidad($velocidad){ $this->velocidad = $velocidad; }
 
-    //Método Volando
+    //Método volando
     public function volando(){
         return $this->altitud > 0;
     }
 
-    //Método Acelerar
+    //Método acelerar
     public function acelerar($velocidad){
         $this->velocidad = $velocidad;
         echo "Acelerando a ".$velocidad."<br>";
     }
 
-    //Métodos Abstractos
+    //Métodos abstractos
     abstract public function volar($altitud);
     abstract public function mostrarInformacion();
 }
