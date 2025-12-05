@@ -5,7 +5,7 @@ require_once "Helicoptero.php";
 
 echo "<h2>--- PROGRAMA PRINCIPAL ---</h2>";
 
-// 1. Crear aeropuerto
+// 1. Creo el objeto aeropuerto
 $a = new Aeropuerto();
 
 // 2. Crear 3 aviones
