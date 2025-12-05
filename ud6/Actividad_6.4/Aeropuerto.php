@@ -12,7 +12,7 @@ class Aeropuerto {
     }
 
     //Método insertar
-    public function insertar($e){
+    public function insertar(ElementoVolador $e){
         $this->elementos[] = $e;
     }
 
