@@ -1,14 +1,17 @@
 <?php
-abstract class ElementoVolador implements Volador
-{
+require_once "Volador.php";
+
+abstract class ElementoVolador implements Volador {
+
+    //Atributos protegidos
     protected $nombre;
     protected $numAlas;
     protected $numMotores;
     protected $altitud;
     protected $velocidad;
 
-    public function __construct($nombre, $numAlas, $numMotores)
-    {
+    //Constructor
+    public function __construct($nombre, $numAlas, $numMotores){
         $this->nombre = $nombre;
         $this->numAlas = $numAlas;
         $this->numMotores = $numMotores;
@@ -16,68 +19,29 @@ abstract class ElementoVolador implements Volador
         $this->velocidad = 0;
     }
 
-    //Getters
-    public function getNombre()
-    {
-        return $this->nombre;
-    }
-    public function getNumAlas()
-    {
-        return $this->numAlas;
-    }
-    public function getNumMotores()
-    {
-        return $this->numMotores;
-    }
-    public function getAltitud()
-    {
-        return $this->altitud;
-    }
-    public function getVelocidad()
-    {
-        return $this->velocidad;
+    //Getters y setters
+    public function getNombre(){ return $this->nombre; }
+    public function getNumAlas(){ return $this->numAlas; }
+    public function getNumMotores(){ return $this->numMotores; }
+    public function getAltitud(){ return $this->altitud; }
+    public function getVelocidad(){ return $this->velocidad; }
+
+    public function setAltitud($altitud){ $this->altitud = $altitud; }
+    public function setVelocidad($velocidad){ $this->velocidad = $velocidad; }
+
+    //Método Volando
+    public function volando(){
+        return $this->altitud > 0;
     }
 
-    //Setters
-    public function setNombre($nombre)
-    {
-        $this->nombre = $nombre;
-    }
-    public function setNumAlas($numAlas)
-    {
-        $this->numAlas = $numAlas;
-    }
-    public function setNumMotores($numMotores)
-    {
-        $this->numMotores = $numMotores;
-    }
-    public function setAltitud($altitud)
-    {
-        $this->altitud = $altitud;
-    }
-    public function setVelocidad($velocidad)
-    {
+    //Método Acelerar
+    public function acelerar($velocidad){
         $this->velocidad = $velocidad;
+        echo "Acelerando a ".$velocidad."<br>";
     }
 
-    public function acelerar(float $nuevaVelocidad)
-    {
-        if ($nuevaVelocidad){
-            $this->velocidad = $nuevaVelocidad;
-        }
-        
-    }
-
-    //Metodos de la clase
-    public function volando($altitud)
-    {
-        $ifVolando=false;
-        if ($altitud > 0) {
-            $ifVolando=true;
-        }
-        return $ifVolando;
-    }
-    
-    abstract public function volar(float $altitud): void;
-    abstract public function mostrarInformacion(): void;
+    //Métodos Abstractos
+    abstract public function volar($altitud);
+    abstract public function mostrarInformacion();
 }
+?>
