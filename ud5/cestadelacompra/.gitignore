@@ -1,0 +1,10 @@
+#.gitignore de VISUAL STUDIO CODE
+### Ignorar ficheros temporales 
+*.log
+## Otros
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
