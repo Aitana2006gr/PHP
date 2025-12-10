@@ -21,7 +21,7 @@ USE goyas;
 --
 
 CREATE TABLE IF NOT EXISTS director (
-  codDirector varchar(3) NOT NULL,
+  codDirector varchar(3) NOT NULL,dwes_01_nbadwes_01_nba
   nombre varchar(50) DEFAULT NULL,
   apellidos varchar(50) DEFAULT NULL,
   PRIMARY KEY (codDirector)

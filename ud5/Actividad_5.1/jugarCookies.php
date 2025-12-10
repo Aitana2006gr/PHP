@@ -9,7 +9,7 @@
         setcookie("numero", $numero, time() + 3600);
         //$_COOKIE['numero'] = $numero;
         //$_COOKIE['intentos'] = 1;
-        setcookie("intentos", 1, time() + 3600);
+        setcookie("intentos", 0, time() + 3600);
         header('jugarCookies.php');
         exit();
     }

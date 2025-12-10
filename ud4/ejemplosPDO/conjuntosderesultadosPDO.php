@@ -24,12 +24,12 @@
 						if($resultado) {
 							$row = $resultado->fetch();
 							while ($row != null) {
-								echo "<option value='${row['cod']}'";
+								echo "<option value='{$row['cod']}'";
 								// Si se recibió un código de producto lo seleccionamos
 								// en el desplegable usando selected='true'
 								if (isset($producto) && $producto == $row['cod'])
 									echo " selected='true'";
-								echo ">${row['nombre_corto']}</option>";
+								echo ">{$row['nombre_corto']}</option>";
 								$row = $resultado->fetch();
 							}
 						}
@@ -53,7 +53,7 @@
 					if($resultado) {
 						$row = $resultado->fetch();
 						while ($row != null) {
-							echo "<p>Tienda ${row['nombre']}: ${row['unidades']} unidades.</p>";
+							echo "<p>Tienda {$row['nombre']}: {$row['unidades']} unidades.</p>";
 							$row = $resultado->fetch();
 						}
 					}

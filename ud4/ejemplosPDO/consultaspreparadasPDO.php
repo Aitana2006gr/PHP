@@ -42,12 +42,12 @@ http://www.w3.org/TR/html4/loose.dtd">
 					if($resultado) {
 						$row = $resultado->fetch();
 						while ($row != null) {
-							echo "<option value='${row['cod']}'";
+							echo "<option value='{$row['cod']}'";
 							// Si se recibió un código de producto lo seleccionamos
 							// en el desplegable usando selected='true'
 							if (isset($producto) && $producto == $row['cod'])
 								echo " selected='true'";
-							echo ">${row['nombre_corto']}</option>";
+							echo ">{$row['nombre_corto']}</option>";
 							$row = $resultado->fetch();
 						}
 					}
@@ -77,7 +77,7 @@ SQL;
 							// Metemos ocultos el código de producto y los de las tiendas
 							echo "<input type='hidden' name='producto' value='$producto'/>";
 							echo "<input type='hidden' name='tienda[]' value='".$row['cod']."'/>";
-							echo "<p>Tienda ${row['nombre']}: ";
+							echo "<p>Tienda {$row['nombre']}: ";
 							// El número de unidades ahora va en un cuadro de texto
 							echo "<input type='text' name='unidades[]' size='4' ";
 							echo "value='".$row['unidades']."'/> unidades.</p>";
