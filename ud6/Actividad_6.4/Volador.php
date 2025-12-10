@@ -1,5 +1,6 @@
 <?php
-interface Volador{
-    public function acelerar ($velocidad);
+interface Volador {
+    //Método acelerar
+    public function acelerar($velocidad);
 }
 ?>

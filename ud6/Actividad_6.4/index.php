@@ -1,50 +1,55 @@
 <?php
 require_once "Aeropuerto.php";
-require_once "Avion.php";
-require_once "Helicoptero.php";
+//Creo el objeto aeropuerto
+$aeropuerto = new Aeropuerto();
 
-echo "<h2>--- PROGRAMA PRINCIPAL ---</h2>";
+//Creo 3 aviones
+$a1 = new Avion("Boeing737", 2, 2, "Iberia", "2020-01-01", 12000);
+$a2 = new Avion("Airbus320", 2, 2, "Iberia", "2019-06-10", 11000);
+$a3 = new Avion("Fokker100", 2, 2, "Vueling", "2018-04-15", 9000);
 
-// 1. Creo el objeto aeropuerto
-$a = new Aeropuerto();
+//Creo 3 helicopteros
+$h1 = new Helicoptero("Boeing AH-64 Apache", 0, 1, "Juan", 2);
+$h2 = new Helicoptero("Bell UH-1 Iroquois (Huey)", 0, 1, "Luis", 3);
+$h3 = new Helicoptero("Mil Mi-24 (Hind)", 0, 1, "Pedro", 4);
 
-// 2. Crear 3 aviones
-$v1 = new Avion("Avion1", 2, 2, "Iberia", "2020-01-01", 10000);
-$v2 = new Avion("Avion2", 2, 4, "Ryanair", "2021-05-12", 9000);
-$v3 = new Avion("Avion3", 2, 2, "Iberia", "2019-08-03", 11000);
+//Inserto a todos en el aeropuerto
+$aeropuerto->insertar($a1);
+$aeropuerto->insertar($a2);
+$aeropuerto->insertar($a3);
+$aeropuerto->insertar($h1);
+$aeropuerto->insertar($h2);
+$aeropuerto->insertar($h3);
 
-// 3. Crear 3 helicópteros
-$h1 = new Helicoptero("Heli1", 0, 1, "Juan", 3);
-$h2 = new Helicoptero("Heli2", 0, 1, "Maria", 2);
-$h3 = new Helicoptero("Heli3", 0, 1, "Aitana", 4);
+//Pruebo el método buscar
+echo "<h3>MÉTODO BUSCAR</h3>";
+$aeropuerto->buscar("Airbus320");
+$aeropuerto->buscar("NoExiste");
+echo "<hr>";
 
-// Insertarlos
-$a->insertar($v1);
-$a->insertar($v2);
-$a->insertar($v3);
-$a->insertar($h1);
-$a->insertar($h2);
-$a->insertar($h3);
+//Pruebo el método listarCompania
+echo "<h3>MÉTODO LISTARCOMPANIA</h3>";
+$aeropuerto->listarCompania("Iberia");
+$aeropuerto->listarCompania("Fantasma");
+echo "<hr>";
 
-// 4. Probar buscar
-$a->buscar("Avion1");      // existe
-$a->buscar("Fantasma");    // no existe
+//Pruebo el método rotores
+echo "<h3>MÉTODO ROTORES</h3>";
+$aeropuerto->rotores(3);
+$aeropuerto->rotores(10);
+echo "<hr>";
 
-// 5. listarCompania
-$a->listarCompania("Iberia");
-$a->listarCompania("NoExiste");
+//Pruebo el método despegar de un avión
+echo "<h3>MÉTODO DESPEGAR avion</h3>";
+$avion = $aeropuerto->despegar("Boeing737", 1000, 200);
+echo $avion->volando() ? "El avión está volando<br>" : "El avión no está volando<br>";
+$avion->mostrarInformacion();
+echo "<hr>";
 
-// 6. rotores
-$a->rotores(3);  // existe
-$a->rotores(9);  // no existe
-
-// 7. Despegue de un avión
-$avionDespegado = $a->despegar("Avion1", 500, 200);
-echo $avionDespegado->volando() ? "<br>Está volando.<br>" : "<br>No está volando.<br>";
-$avionDespegado->mostrarInformacion();
-
-// 8. Despegue de helicóptero
-$heliDespegado = $a->despegar("Heli1", 200, 100);
-echo $heliDespegado->volando() ? "<br>Está volando.<br>" : "<br>No está volando.<br>";
-$heliDespegado->mostrarInformacion();
+//Pruebo el método despegar de un helicóptero
+echo "<h3>MÉTODO DESPEGAR helicoptero</h3>";
+$heli = $aeropuerto->despegar("Bell UH-1 Iroquois (Huey)", 200, 80);
+echo $heli->volando() ? "El helicóptero está volando<br>" : "El helicóptero no está volando<br>";
+$heli->mostrarInformacion();
+echo "<hr>";
 ?>

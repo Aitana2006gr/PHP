@@ -1,0 +1,198 @@
+/*HOJA DE ESTILOS PARA LA CESTA DE LA COMPRA*/
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f7f7f7;
+    color: #333;
+}
+
+/* === REGLA ESPECIAL PARA CENTRAR EL LOGIN === */
+/* Esta clase SÓLO se aplica al <body> en login.php y garantiza el centrado perfecto */
+.login-body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; 
+}
+/* Fin Regla Especial */
+
+
+/* === ENCABEZADO Y PIE === */
+#encabezado, #pie {
+    background-color: #D6EAF8; /* Azul Pastel */
+    color: #1a1a1a;
+    padding: 15px;
+    text-align: left;
+    border-bottom: 3px solid #A2D9CE;
+}
+#pie {
+    margin-top: 20px;
+    border-top: 3px solid #A2D9CE;
+    border-bottom: none;
+    text-align: center;
+}
+
+h1 {
+    font-weight: bold;
+    font-size: 24px;
+    margin: 0;
+    color: #333;
+}
+
+/* === CONTENIDO PRINCIPAL (Layout de 2 columnas) === */
+#contenido {
+    width: 90%;
+    margin: 0 auto;
+    padding: 20px;
+    display: flex; /* Activa la estructura de dos columnas */
+    gap: 20px; 
+    align-items: flex-start;
+}
+
+.listado-productos {
+    flex-grow: 1; 
+}
+
+/* === CESTA LATERAL: ANCHO Y LISTA CORREGIDOS === */
+.cesta-lateral {
+    width: 350px; /* Aumentado para que el texto de la lista quepa mejor */
+    min-width: 300px;
+    background-color: #A2D9CE; /* Verde Azulado Suave */
+    color: #333;
+    padding: 10px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+.cesta-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2em;
+    font-weight: bold;
+    padding: 10px 0;
+    border-bottom: 1px solid #333;
+}
+
+.cesta-header img {
+    height: 30px;
+    margin-right: 10px;
+}
+
+/* ESTILO DE LA LISTA INTERNA DE LA CESTA */
+.cesta-contenido {
+    font-size: 0.9em;
+    padding: 10px 0;
+    text-align: left; 
+}
+.cesta-contenido ul {
+    list-style-type: disc; /* Puntos de lista */
+    list-style-position: inside; 
+    padding: 0 10px; 
+    margin: 0;
+}
+.cesta-contenido li {
+    margin-bottom: 5px;
+    font-weight: normal; /* Texto legible */
+    color: #1a1a1a;
+    word-wrap: break-word; /* Evita que el texto se salga */
+}
+
+/* === ÍTEMS DE PRODUCTO (Listado principal) === */
+.producto-linea {
+    padding: 5px 0;
+    border-bottom: 1px dotted #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+.producto-linea span {
+    margin-left: 10px;
+}
+
+/* === BOTONES (Todos al mismo tamaño y color Morado Muted) === */
+input[type="submit"], button {
+    background-color: #D0A9F4; 
+    color: #333;
+    padding: 8px 12px;
+    border: 1px solid #B59CC5;
+    border-radius: 3px;
+    cursor: pointer;
+    margin: 5px;
+    width: 150px; 
+    box-sizing: border-box; 
+}
+
+input[type="submit"]:hover, button:hover {
+    background-color: #B59CC5;
+}
+
+/* === MENSAJES DE ERROR === */
+.error {
+    color: red;
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-align: left;
+}
+
+/* Estilos de la tabla en cesta.php */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+tfoot td {
+    font-weight: bold;
+    background-color: #D6EAF8;
+}
+
+/* === ESTILOS ESPECÍFICOS PARA EL LOGIN (Caja Lila) === */
+#form_seleccion {
+    background-color: #E3CCF9; /* Fondo Lila Suave */
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 350px;
+    text-align: left; /* Alinea los inputs y labels */
+}
+
+#form_seleccion h2 {
+    font-size: 24px;
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+#form_seleccion fieldset {
+    border: none;
+    padding: 0;
+    margin: 0;
+}
+
+#form_seleccion label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #333;
+}
+
+#form_seleccion input[type="text"],
+#form_seleccion input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #A2D9CE;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+#form_seleccion input[type="submit"] {
+    width: 100%; 
+    margin-top: 10px;
+}
