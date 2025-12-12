@@ -1,5 +1,4 @@
 <?php
-
 // Iniciamos o reanudamos la sesión
 session_start();
 

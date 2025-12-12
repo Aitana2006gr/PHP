@@ -32,13 +32,14 @@ $array_personas = [
 ];
 
 // Variables para almacenar los resultados en sesion
-if (!isset($_SESSION['mi_agenda'])){
+if (!isset($_SESSION['mi_agenda'])) {
     $_SESSION['mi_agenda'] = [];
 }
 $resultado_accion = "";
 
 // Funcion para mostrar el resultado de la busqueda del nombre y asignar el resultado en variables. Recibe el nombre y el array de la agenda
-function mostrar_resultado($nombre, $array_personas) {
+function mostrar_resultado($nombre, $array_personas)
+{
     // Verifico con un regex que el nombre no tenga numeros ni simbolos
     if (!preg_match("/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/", $nombre)) {
         echo "<p style=\"color: red\">El nombre no puede contener números ni símbolos.</p>";
@@ -69,7 +70,8 @@ function mostrar_resultado($nombre, $array_personas) {
 }
 
 // Funcion para listar el resultado del contacto encontrado en la agenda
-function listar_resultado() {
+function listar_resultado()
+{
     // Comprobamos que resultado no es nulo
     if ($_SESSION['mi_agenda'] == null) {
         echo "<p style=\"color: red\">No se han realizado búsquedas aún.</p>";
@@ -86,7 +88,8 @@ function listar_resultado() {
 }
 
 // Funcion para cerrar la sesion
-function cerrar_sesion() {
+function cerrar_sesion()
+{
     // LIMPIAR las variables de sesión
     session_unset();
     // DESTRUIR la sesión (claves y valores)
@@ -107,11 +110,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agenda interactiva</title>
 </head>
+
 <body>
     <h1> Agenda Interactiva</h1>
     <h2> LOCALIZADOS </h2>
@@ -125,28 +130,59 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </form>
     <br>
     <div id="resultado">
-    <?php
-    // Comprobar que accion se ha seleccionado
-    if ($resultado_accion == "Buscar titular") {
-        // Obtener el nombre del formulario
-        $nombre_buscado = trim($_POST['titular']);
-        // Mostrar el resultado de la busqueda
-        echo mostrar_resultado($nombre_buscado, $array_personas);
-    }
-    if ($resultado_accion == "Listado") {
-        // Listar los resultados almacenados en la sesión
-        echo "<h3>Listado de búsquedas realizadas:</h3>";
-        listar_resultado();
-    }
-    if ($resultado_accion == "Cerrar sesion") {
-        // Cerrar la sesión
-        cerrar_sesion();
-    }
+        <?php
+        // Comprobar que accion se ha seleccionado
+        if ($resultado_accion == "Buscar titular") {
+            // Obtener el nombre del formulario
+            $nombre_buscado = trim($_POST['titular']);
+            // Mostrar el resultado de la busqueda
+            echo mostrar_resultado($nombre_buscado, $array_personas);
+        }
+        if ($resultado_accion == "Listado") {
+            // Listar los resultados almacenados en la sesión
+            echo "<h3>Listado de búsquedas realizadas:</h3>";
+            listar_resultado();
+        }
+        if ($resultado_accion == "Cerrar sesion") {
+            // Cerrar la sesión
+            cerrar_sesion();
+        }
 
-    // Limpio la variable de accion
-    $resultado_accion = "";
+        // Limpio la variable de accion
+        $resultado_accion = "";
+        /*CON UN SWITCH*/
+        /*
+        // Comprobar qué acción se ha seleccionado
+        switch ($resultado_accion) {
+            case "Buscar titular":
+                // Obtener el nombre del formulario
+                $nombre_buscado = trim($_POST['titular']);
+                // Mostrar el resultado de la búsqueda
+                echo mostrar_resultado($nombre_buscado, $array_personas);
+                break;
 
-    ?>
+            case "Listado":
+                // Listar los resultados almacenados en la sesión
+                echo "<h3>Listado de búsquedas realizadas:</h3>";
+                listar_resultado();
+                break;
+
+            case "Cerrar sesion":
+                // Cerrar la sesión
+                cerrar_sesion();
+                break;
+
+            default:
+                // Acción no reconocida (opcional)
+                echo "Acción no válida.";
+                break;
+        }
+
+        // Limpio la variable de acción
+        $resultado_accion = "";
+        */
+        ?>
     </div>
 </body>
+
 </html>
