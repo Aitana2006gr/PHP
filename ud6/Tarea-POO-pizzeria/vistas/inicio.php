@@ -15,11 +15,12 @@
     ?>
     <hr>
     <?php
-    /*echo "<label for="frutas">Elige una fruta:</label>
-    <select id="frutas" name="frutas">
-    <option value="manzana">Manzana</option>
-    <option value="banana">Banana</option>
-    <option value="naranja">Naranja</option>
+    /*echo "<label for="frutas">Selecciona la forma de pago:</label>
+    <select id="formaPago" name="Método de pago">
+    <option value="Contado">Contado</option>
+    <option value="MasterCard">VISA</option>
+    <option value="Ame">Naranja</option>
+    <option value="Ame">Naranja</option>
     </select>"
     */
     //index-controlador

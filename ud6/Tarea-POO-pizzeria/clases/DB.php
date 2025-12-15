@@ -4,7 +4,7 @@ class baseDatos
 {
     public static function obtienePizzas()
     {
-        require_once("DB.php");
+        require_once("conexionBD.php");
         if (!isset($conexion)) {
             return NULL;
         }
@@ -21,7 +21,7 @@ class baseDatos
     }
     
     public static function obtienePedidos(){
-        require_once "DB.php";
+        require_once "conexionBD.php";
         if (!isset($conexion)) {
             return NULL;
         }

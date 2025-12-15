@@ -1,4 +1,4 @@
-﻿
+
 
 --
 -- Base de datos: `pizzeria`
@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS `detalle` (
   `id_pizza` varchar(5) CHARACTER SET latin1 COLLATE latin1_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
+pizzeriadetalle--
 -- Volcado de datos para la tabla `detalle`
 --
 
