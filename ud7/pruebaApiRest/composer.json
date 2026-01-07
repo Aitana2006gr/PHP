@@ -1,0 +1,24 @@
+{
+    "name": "daw212/prueba-api-rest",
+    "description": "Proyecto de prueba de API Rest",
+    "autoload": {
+        "psr-4": {
+            "Clases": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Aitana Gonzalez",
+            "email": "aitana2006gr@gmail.com"
+        }
+    ],
+    "require": {
+        "guzzlehttp/guzzle": "^7.0",
+        "monolog/monolog": "^3.10"
+    },
+    "config": {
+        "platform": {
+            "php": "8.4.6"
+        }
+    }
+}
