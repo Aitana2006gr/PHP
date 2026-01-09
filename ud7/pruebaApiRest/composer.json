@@ -3,7 +3,7 @@
     "description": "Proyecto de prueba de API Rest",
     "autoload": {
         "psr-4": {
-            "Clases": "src/"
+            "Clases\\": "src/"
         }
     },
     "authors": [

@@ -3,7 +3,7 @@
         'name' => 'daw212/prueba-api-rest',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '3d0b18807634eb3b31e48c1fc27f7231a551fdc9',
+        'reference' => 'f8e2c916dd000c6b94a6bbed4310ac796d50068f',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         'daw212/prueba-api-rest' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '3d0b18807634eb3b31e48c1fc27f7231a551fdc9',
+            'reference' => 'f8e2c916dd000c6b94a6bbed4310ac796d50068f',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
