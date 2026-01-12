@@ -1,0 +1,23 @@
+{
+    "name": "daw212/tarea7", 
+    "description": "Tarea7: Creación de servicios API REST para el acceso a la bbdd de productos",
+    "autoload": {
+        "psr-4": {
+            "Clases\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Aitana Gonzalez",
+            "email": "aitana2006gr@gmail.com"
+        }
+    ],
+    "require": {
+        "guzzlehttp/guzzle": "^7.0"
+    },
+    "config": {
+        "platform": {
+            "php": "8.4.6"
+        }
+    }
+}
