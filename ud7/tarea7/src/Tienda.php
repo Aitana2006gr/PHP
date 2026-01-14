@@ -5,7 +5,7 @@ namespace Clases;
 use PDO;
 use PDOException;
 
-class Tiendas extends Conexion
+class Tienda extends Conexion
 {
     public function __construct()
     {
@@ -58,7 +58,7 @@ class Tiendas extends Conexion
             $statement = $this->conexion->prepare($statement);
             $statement->execute(array(
                 'nombre' => $input['nombre'],
-                'tlf' => $input['nombre_corto'] ?? null,
+                'tlf' => $input['tlf'] ?? null,
             ));
             return $statement->rowCount();
         } catch (\PDOException $e) {

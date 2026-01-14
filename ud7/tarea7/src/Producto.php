@@ -55,6 +55,7 @@ class Producto extends Conexion
             $stmt = $this->crearConexion()->prepare($sql);
             $stmt->bindParam(":codProducto", $codProducto, PDO::PARAM_INT);
             $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
             exit($e->getMessage());
         }
@@ -63,11 +64,15 @@ class Producto extends Conexion
     //MODIFICAR TODAVIA
     public function getStock($codProducto)
     {
-        $sql = "SELECT nombre_corto, descripcion FROM PRODUCTO WHERE cod= :codProducto";
+        $sql = "SELECT t.nombre, s.unidades 
+            FROM tienda t 
+            INNER JOIN stock s ON t.cod = s.tienda 
+            WHERE s.producto = :codProducto";
         try {
             $stmt = $this->crearConexion()->prepare($sql);
             $stmt->bindParam(":codProducto", $codProducto, PDO::PARAM_INT);
             $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
             exit($e->getMessage());
         }

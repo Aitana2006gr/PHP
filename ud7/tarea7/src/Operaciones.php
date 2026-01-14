@@ -1,4 +1,8 @@
-<?
+<?php
+namespace Clases;
+
+use Clases\Producto;
+use Clases\Tienda;
 //Clase que recoge las peticiones Rest y utiliza las clases Producto y Familia
 //Todo esto es el controller
 
@@ -9,17 +13,11 @@ require_once 'Familia.php';
 */
 
 
-namespace Clases;
-//use Clases\tiendas;
 
 class Operaciones
 {
     private $requestMethod;
     private $uri;
-    private $codTienda;
-    private $codProducto;
-    private $tiendas;
-    private $producto;
 
     public function __construct($requestMethod, $uri)
     {
@@ -30,19 +28,27 @@ class Operaciones
     public function processRequest()
     {
         switch ($this->requestMethod) {
+
             case 'GET':
-                if ($this->uri[1] === "producto" && $this->uri[2] != "stock") {
+                if ($this->uri[1] === "producto" && isset($this->uri[2]) && $this->uri[2] != "stock") { //uri 1 es producto, uri 2 es el codigo del producto
                     $response = $this->getProducto();
                 }
-                if ($this->uri[1] === "producto" && $this->uri[2] != "stock") {
-                    $response = $this->getStockProducto($this->codProducto);
+                if ($this->uri[1] === "producto" && $this->uri[2] === "stock" && isset($this->uri[3])) { //uri 1 es producto, uri 2 es stock y uri 3 es el codigo del producto
+                    $response = $this->getStockProducto();
                 }
                 break;
             case 'POST':
-                $response = $this->createTiendaFromRequest();
+                if ($this->uri[1] === "tiendas") { //uri 1 es tiendas
+                    $response = $this->createTiendaFromRequest();
+                }
+                /*{ "nombre": "Aitana",
+                "tlf": "942616638"}*/
                 break;
+                if($this->uri[1]==="tiendas"&& isset($this->uri[2])){
+                    $response=$this->deleteTienda();
+                }
             case 'DELETE':
-                $response = $this->deleteTienda($this->codTienda);
+                //$response = $this->deleteTienda();
                 break;
             case 'OPTIONS':
                 $response['status_code_header'] = 'HTTP/1.1 200 OK';
@@ -55,7 +61,7 @@ class Operaciones
             echo $response['body'];
         }
     }
-    
+
     //Error. No se puede procesar la respuesta
     private function unprocessableEntityResponse()
     {
@@ -64,7 +70,7 @@ class Operaciones
             'error' => 'Invalid input'
         ]);
         return $response;
-    }
+    } 
 
     //Error. No se encuentra
     private function notFoundResponse()
@@ -84,12 +90,12 @@ class Operaciones
         return $response;
     }
 
-    private function getStockProducto($codProducto){
-        $producto=new Producto();
-        $datos=$producto->getStock($codProducto);
-        if (!$datos) {
-            return $this->notFoundResponse();
-        }
+    private function getStockProducto()
+    {
+        $producto = new Producto();
+        $codProducto = $this->uri[3];
+        $datos = $producto->getStock($codProducto);
+        //$datosStock= $producto->getStock($this->uri[3]);
         $response['status_code_header'] = 'HTTP/1.1 200 OK';
         $response['body'] = json_encode($datos);
         return $response;
@@ -98,24 +104,33 @@ class Operaciones
     //Para la parte de post
     private function createTiendaFromRequest() //Insertar una tienda en la bdd
     {
+        $tienda=new Tienda();
         $input = (array) json_decode(file_get_contents('php://input'), TRUE);
-        if (! $this->validateTienda($input)) {
-            return $this->unprocessableEntityResponse();
+        $tienda->insert($input);
+        /*
+        if(!$insertada){
+            $this->unprocessableEntityResponse();
         }
-        $this->tiendas->insert($input);
+        */
         $response['status_code_header'] = 'HTTP/1.1 201 Created';
         $response['body'] = "Tienda creada con éxito";
+        /*if(!$response){
+            $this->notFoundResponse();
+        }*/
         return $response;
     }
 
+
+    
     //Para la parte de delete
     private function deleteTienda($codTienda)
     {
-        $result = $this->tiendas->find($codTienda);
+        $tienda=new Tienda();
+        $result = $tienda->find($codTienda);
         if (!$result) {
             return $this->notFoundResponse();
         }
-        $this->tiendas->delete($codTienda);
+        $tienda->delete($codTienda);
         $response['status_code_header'] = 'HTTP/1.1 200 OK';
         $response['body'] = null;
         return $response;
@@ -133,6 +148,7 @@ class Operaciones
         return $response;
     }*/
 
+    /*
     private function getAllProductos()
     {
         $result = $this->tiendas->findAll();
@@ -140,7 +156,8 @@ class Operaciones
         $response['body'] = json_encode($result);
         return $response;
     }
-
+*/
+    /*
     private function createProductoFromRequest()
     {
         $input = (array) json_decode(file_get_contents('php://input'), TRUE);
@@ -152,6 +169,7 @@ class Operaciones
         $response['body'] = "Producto creado con éxito";
         return $response;
     }
+    */
 
     //metodo post: http://localhost/PHP/ud7/pruebaApiRest/public/person?firstname=Aitana&lastname=Gonzalez
     //se pueden colocar los parametros también en key y value, VALE ESTO NO FUNCIONA
@@ -159,7 +177,7 @@ class Operaciones
     { "firstname": "Aitana",
         "lastname": "González"
     }*/
-
+    /*
     private function deleteProducto($codProducto)
     {
         $result = $this->tiendas->find($codProducto);
@@ -171,6 +189,7 @@ class Operaciones
         $response['body'] = null;
         return $response;
     }
+        *//*
 
     private function validateTienda($input)
     {
@@ -183,5 +202,5 @@ class Operaciones
         }
         return true;
     }
-
+    */
 }

@@ -1,9 +1,7 @@
 <?php
 //Index que recibe las peticiones de la API
-
-use Clases\Operaciones;
-
 require '../vendor/autoload.php';
+use Clases\Operaciones;
 
 //use Clases\Controller;
 
