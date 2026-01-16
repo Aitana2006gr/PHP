@@ -28,6 +28,7 @@ class Tienda extends Conexion
             exit($e->getMessage());
         }
     }
+    
     public function find($codTienda)
     {
         $statement = "
@@ -46,6 +47,7 @@ class Tienda extends Conexion
             exit($e->getMessage());
         }
     }
+
     public function insert(array $input)
     {
         $statement = "

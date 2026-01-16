@@ -1,4 +1,5 @@
 <?php
+
 namespace Clases;
 
 use Clases\Producto;
@@ -40,15 +41,20 @@ class Operaciones
             case 'POST':
                 if ($this->uri[1] === "tiendas") { //uri 1 es tiendas
                     $response = $this->createTiendaFromRequest();
+                } else {
+                    $response = $this->notFoundResponse();
                 }
                 /*{ "nombre": "Aitana",
                 "tlf": "942616638"}*/
                 break;
-                if($this->uri[1]==="tiendas"&& isset($this->uri[2])){
-                    $response=$this->deleteTienda();
-                }
+
             case 'DELETE':
-                //$response = $this->deleteTienda();
+                // Comprobar que se coloque /tiendas/id
+                if ($this->uri[1] === "tiendas" && isset($this->uri[2])) {
+                    $response = $this->deleteTienda($this->uri[2]); //Se pasa el id de la url para eliminar la tienda
+                } else {
+                    $response = $this->notFoundResponse();
+                }
                 break;
             case 'OPTIONS':
                 $response['status_code_header'] = 'HTTP/1.1 200 OK';
@@ -70,13 +76,13 @@ class Operaciones
             'error' => 'Invalid input'
         ]);
         return $response;
-    } 
+    }
 
     //Error. No se encuentra
-    private function notFoundResponse()
+    private function notFoundResponse($texto)
     {
         $response['status_code_header'] = 'HTTP/1.1 404 Not Found';
-        $response['body'] = null;
+        $response['body'] = json_encode(['ERROR'=>$texto], JSON_UNESCAPED_UNICODE);
         return $response;
     }
 
@@ -85,8 +91,12 @@ class Operaciones
     {
         $producto = new Producto();
         $datos = $producto->getProducto($this->uri[2]);
+        if($datos){
         $response['status_code_header'] = 'HTTP/1.1 200 OK';
-        $response['body'] = json_encode($datos);
+        $response['body'] = json_encode($datos, JSON_UNESCAPED_UNICODE);
+        }else {
+            return $response=$this->notFoundResponse("Producto no encontrado");
+        }
         return $response;
     }
 
@@ -104,16 +114,15 @@ class Operaciones
     //Para la parte de post
     private function createTiendaFromRequest() //Insertar una tienda en la bdd
     {
-        $tienda=new Tienda();
+        $tienda = new Tienda();
         $input = (array) json_decode(file_get_contents('php://input'), TRUE);
-        $tienda->insert($input);
-        /*
-        if(!$insertada){
-            $this->unprocessableEntityResponse();
+
+        if (!isset($input['nombre'])) {
+            return $this->unprocessableEntityResponse();
         }
-        */
+        $tienda->insert($input);
         $response['status_code_header'] = 'HTTP/1.1 201 Created';
-        $response['body'] = "Tienda creada con éxito";
+        $response['body'] = "Tienda eliminada con éxito";
         /*if(!$response){
             $this->notFoundResponse();
         }*/
@@ -121,18 +130,20 @@ class Operaciones
     }
 
 
-    
+
     //Para la parte de delete
     private function deleteTienda($codTienda)
     {
-        $tienda=new Tienda();
+        $tienda = new Tienda();
         $result = $tienda->find($codTienda);
-        if (!$result) {
+        if (empty($result)) { //Si el array está vacio, no existe
             return $this->notFoundResponse();
         }
+
         $tienda->delete($codTienda);
+
         $response['status_code_header'] = 'HTTP/1.1 200 OK';
-        $response['body'] = null;
+        $response['body'] = json_encode(['message' => "Tienda $codTienda eliminada"]);;
         return $response;
     }
 

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Cliente API Rest Javascript</h1>
+    <div id="resultado">
+        <h3>Resultado de la petición</h3>
+        <table border="1">
+            <tr>
+                <th>Endpoint</th>
+                <td id="result-endpoint"></td>
+            </tr>
+            <tr>
+                <th>Método</th>
+                <td id="result-method"></td>
+            </tr>
+            <tr>
+                <th>Status code</th>
+                <td id="result-status"></td>
+            </tr>
+            <tr>
+                <th>Response Body</th>
+                <td>
+                    <pre id="result-body"></pre>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <hr>
+    <div id="error">
+        <h3>ERROR</h3>
+        <p><strong id="error-message"></strong></p>
+        <hr>
+    </div>
+
+    <h2>1. Obtener Producto</h2>
+    <p>Método: GET | Endpoint:/producto/{id}</p>
+    <form id="form-get-producto" action="">
+        <table>
+            <tr>
+                <td><label for="producto_id">ID del Producto:</label></td>
+                <td><input type="text" id="producto_id" name="producto_id"></td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <button type="submit">Consultar Producto</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+    <script>
+        const BASE_URL = "http://localhost/PHP/ud7/tarea7/public";
+        function limpiarMensajes() {
+            document.getElementById('resultado').style.display = "none";
+            document.getElementById('error').style.display = "none";
+        }
+        function mostrarResultado(endpoint, method, status, body) {
+            limpiarMensajes();
+            document.getElementById('result-endpoint').textContent = endpoint;
+            document.getElementById('result-method').textContent = method;
+            document.getElementById('result-status').textContent = status;
+            //formatear el body
+            let body;
+            if (typeof bodyText === 'object') {
+                bodyText = JSON.stringify(body, null, 2);
+            } else {
+                bodyText = body;
+            }
+            document.getElementById('result-body').textContent = bodyText;
+            document.getElementById('resultado').style.display = "block";
+            window.scrollTo(0, 0);
+        }
+        async function hacerPeticion(endpoint, method, body = null) {
+            try {
+                const url = BASE_URL + endpoint;
+                const options = {
+                    method: method,
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    }
+                };
+                if (body) {
+                    options.body = JSON.stringify(body);
+                }
+                const response = await fetch(url, options);
+                const contentType = response.headers.get('content-type');
+                let responseBody;
+                if (contentType && contentType.includes('application/json')) {
+                    responseBody = await response.json();
+                } else {
+                    responseBody = await response.text();
+                }
+                mostrarResultado(endpoint, method, response.status, responseBody);
+            } catch (error) {
+                document.getElementById('error-message').textContent = mensaje;
+                document.getElementById('error').style.display = "block";
+                window.scrollTo(0, 0);
+            }
+        }
+        //ESTE ES EL MANEJADOR
+        document.getElementById('form-get-producto').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const productoId = document.getElementById('producto_id').value;
+            if (!productoId) {
+                return;
+            }
+            hacerPeticion('/producto/' + productoId, 'GET');
+        })
+    </script>
+</body>
+
+</html>
