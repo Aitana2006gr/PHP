@@ -123,3 +123,4 @@ ALTER TABLE `detalle`
 ADD CONSTRAINT `detalle_ibfk_1` FOREIGN KEY (`id_pedido`) REFERENCES `pedido` (`numero`),
 ADD CONSTRAINT `detalle_ibfk_2` FOREIGN KEY (`id_pizza`) REFERENCES `pizza` (`codigo`);
 
+dwes
