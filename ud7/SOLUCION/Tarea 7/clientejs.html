@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cliente API REST - JavaScript</title>
+</head>
+<body>
+    <h1>Cliente API REST - JavaScript </h1>
+
+    <hr>
+
+    <h3>Configuración</h3>
+    <p>URL Base del API: <strong id="base-url">http://localhost/ud7/tarea7/public</strong></p>
+    <p><em>Para cambiar la URL, modifica la variable BASE_URL en el código JavaScript de este archivo.</em></p>
+
+    <hr>
+
+    <div id="resultado" style=">display:none;">
+        <h3>Resultado de la Petición</h3>
+        <table border="1" cellpadding="10" cellspacing="0">
+            <tr>
+                <th>Endpoint</th>
+                <td id="result-endpoint"></td>
+            </tr>
+            <tr>
+                <th>Método</th>
+                <td id="result-method"></td>
+            </tr>
+            <tr>
+                <th>Status Code</th>
+                <td id="result-status"></td>
+            </tr>
+            <tr>
+                <th>Response Body</th>
+                <td><pre id="result-body"></pre></td>
+            </tr>
+        </table>
+        <hr>
+    </div>
+
+    <div id="error" style="display:none;">
+        <h3>ERROR</h3>
+        <p><strong id="error-message"></strong></p>
+        <hr>
+    </div>
+
+    <h2>1. Obtener Producto</h2>
+    <p><strong>Método:</strong> GET | <strong>Endpoint:</strong> /producto/{id}</p>
+    <form id="form-get-producto">
+        <table>
+            <tr>
+                <td><label for="producto_id">ID del Producto:</label></td>
+                <td><input type="text" id="producto_id" name="producto_id" placeholder="Ej: 1" required></td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <button type="submit">Consultar Producto</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+
+    <hr>
+
+    <h2>2. Obtener Stock de Producto</h2>
+    <p><strong>Método:</strong> GET | <strong>Endpoint:</strong> /producto/stock/{id}</p>
+    <form id="form-get-stock">
+        <table>
+            <tr>
+                <td><label for="stock_id">ID del Producto:</label></td>
+                <td><input type="text" id="stock_id" name="stock_id" placeholder="Ej: 1" required></td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <button type="submit">Consultar Stock</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+
+    <hr>
+
+    <h2>3. Crear Tienda</h2>
+    <p><strong>Método:</strong> PUT | <strong>Endpoint:</strong> /tienda</p>
+    <form id="form-crear-tienda">
+        <table>
+            <tr>
+                <td><label for="tienda_nombre">Nombre de la Tienda:</label></td>
+                <td><input type="text" id="tienda_nombre" name="tienda_nombre" placeholder="Ej: Mi Tienda" required></td>
+            </tr>
+            <tr>
+                <td><label for="tienda_tlf">Teléfono:</label></td>
+                <td><input type="text" id="tienda_tlf" name="tienda_tlf" placeholder="Ej: 666777888" required></td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <button type="submit">Crear Tienda</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+
+    <hr>
+
+    <h2>4. Eliminar Tienda</h2>
+    <p><strong>Método:</strong> DELETE | <strong>Endpoint:</strong> /tienda</p>
+    <form id="form-eliminar-tienda">
+        <table>
+            <tr>
+                <td><label for="tienda_cod">Código de la Tienda:</label></td>
+                <td><input type="number" id="tienda_cod" name="tienda_cod" placeholder="Ej: 1" required></td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <button type="submit">Eliminar Tienda</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+
+    <hr>
+
+    <footer>
+        <p><em>Cliente API REST - JavaScript sin CSS</em></p>
+    </footer>
+
+    <script>
+        // Configuración de la URL base del API
+        const BASE_URL = 'http://localhost/ud7/tarea7/public';
+
+        // Mostrar la URL en la página
+        document.getElementById('base-url').textContent = BASE_URL;
+
+        // Función para ocultar mensajes anteriores
+        function limpiarMensajes() {
+            document.getElementById('resultado').style.display = 'none';
+            document.getElementById('error').style.display = 'none';
+        }
+
+        // Función para mostrar errores
+        function mostrarError(mensaje) {
+            limpiarMensajes();
+            document.getElementById('error-message').textContent = mensaje;
+            document.getElementById('error').style.display = 'block';
+            // Scroll hacia arriba para ver el error
+            window.scrollTo(0, 0);
+        }
+
+        // Función para mostrar resultados
+        function mostrarResultado(endpoint, method, status, body) {
+            limpiarMensajes();
+            document.getElementById('result-endpoint').textContent = endpoint;
+            document.getElementById('result-method').textContent = method;
+            document.getElementById('result-status').textContent = status;
+
+            // Formatear el body
+            let bodyText;
+            if (typeof body === 'object') {
+                bodyText = JSON.stringify(body, null, 2);
+            } else {
+                bodyText = body;
+            }
+            document.getElementById('result-body').textContent = bodyText;
+            document.getElementById('resultado').style.display = 'block';
+
+            // Scroll hacia arriba para ver el resultado
+            window.scrollTo(0, 0);
+        }
+
+        // Función para realizar peticiones al API
+        async function hacerPeticion(endpoint, method, body = null) {
+            try {
+                const url = BASE_URL + endpoint;
+                const options = {
+                    method: method,
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    }
+                };
+
+                if (body) {
+                    options.body = JSON.stringify(body);
+                }
+
+                const response = await fetch(url, options);
+                const contentType = response.headers.get('content-type');
+
+                let responseBody;
+                if (contentType && contentType.includes('application/json')) {
+                    responseBody = await response.json();
+                } else {
+                    responseBody = await response.text();
+                }
+
+                mostrarResultado(endpoint, method, response.status, responseBody);
+
+            } catch (error) {
+                mostrarError('Error al realizar la petición: ' + error.message);
+            }
+        }
+
+        // Handler para obtener producto
+        document.getElementById('form-get-producto').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const productoId = document.getElementById('producto_id').value;
+
+            if (!productoId) {
+                mostrarError('Por favor, introduce un ID de producto');
+                return;
+            }
+
+            hacerPeticion('/producto/' + productoId, 'GET');
+        });
+
+        // Handler para obtener stock
+        document.getElementById('form-get-stock').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const stockId = document.getElementById('stock_id').value;
+
+            if (!stockId) {
+                mostrarError('Por favor, introduce un ID de producto');
+                return;
+            }
+
+            hacerPeticion('/producto/stock/' + stockId, 'GET');
+        });
+
+        // Handler para crear tienda
+        document.getElementById('form-crear-tienda').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const nombre = document.getElementById('tienda_nombre').value;
+            const tlf = document.getElementById('tienda_tlf').value;
+
+            if (!nombre || !tlf) {
+                mostrarError('Por favor, completa todos los campos');
+                return;
+            }
+
+            const body = {
+                nombre: nombre,
+                tlf: tlf
+            };
+
+            hacerPeticion('/tienda', 'POST', body);
+        });
+
+        // Handler para eliminar tienda
+        document.getElementById('form-eliminar-tienda').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const cod = document.getElementById('tienda_cod').value;
+
+            if (!cod) {
+                mostrarError('Por favor, introduce el código de la tienda');
+                return;
+            }
+
+            const body = {
+                cod: parseInt(cod)
+            };
+
+            hacerPeticion('/tienda', 'DELETE', body);
+        });
+    </script>
+</body>
+</html>

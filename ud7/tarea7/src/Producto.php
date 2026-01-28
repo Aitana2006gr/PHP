@@ -53,7 +53,8 @@ class Producto extends Conexion
         $sql = "SELECT nombre_corto, descripcion FROM PRODUCTO WHERE cod= :codProducto";
         try {
             $stmt = $this->crearConexion()->prepare($sql);
-            $stmt->bindParam(":codProducto", $codProducto, PDO::PARAM_INT);
+            //$stmt->bindParam(":codProducto", $codProducto, PDO::PARAM_INT); esto no lo uso porque es una cadena, no numeros solamente
+            $stmt->bindParam(":codProducto", $codProducto, PDO::PARAM_STR);
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
@@ -70,7 +71,8 @@ class Producto extends Conexion
             WHERE s.producto = :codProducto";
         try {
             $stmt = $this->crearConexion()->prepare($sql);
-            $stmt->bindParam(":codProducto", $codProducto, PDO::PARAM_INT);
+            //$stmt->bindParam(":codProducto", $codProducto, PDO::PARAM_INT);
+            $stmt->bindParam(":codProducto", $codProducto, PDO::PARAM_STR);
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {

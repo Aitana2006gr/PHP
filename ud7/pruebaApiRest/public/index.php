@@ -40,3 +40,22 @@ $controller = new PersonController($requestMethod, $userId);
 $controller->processRequest();
 
 //http://localhost/php/ud7/pruebaApiRest/public/person
+
+//ENDPOINTS PARA COMPROBAR SI TODO FUNCIONA
+
+//GET http://localhost/PHP/ud7/tarea7/public/producto/3DSNG
+
+//GET http://localhost/PHP/ud7/tarea7/public/producto/stock/3DSNG
+
+/*
+POST /tiendas
+{
+  "nombre": "Nueva tienda",
+  "tlf": "600123123"
+}
+  */
+
+//DELETE /tiendas/4
+
+
+

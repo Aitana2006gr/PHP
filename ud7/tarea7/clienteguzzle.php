@@ -4,8 +4,8 @@ require 'vendor/autoload.php';
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 
-$BASE__URL = "http://localhost/PHP/ud7/tarea7/public";
-
+$BASE__URL = "http://localhost/GitHub/PHP/PHP/ud7/tarea7/public";
+//http://localhost/PHP/ud7/tarea7/public
 //Objeto cliente de la clase Guzzle
 $client = new Client([
     'base_uri' => $BASE__URL,
@@ -73,10 +73,14 @@ function pruebaCrearTienda($BASE__URL, $client)
             'nombre' => 'Tienda Guzzle',
             'tlf' => '942616638'
         ];
-        $response = $client->request('POST', $BASE__URL . '/tienda/' . ['json' => $nuevaTienda]);
-        printResponse("4. POST /tienda - Crear tienda ", $response);
+        //$response = $client->request('POST', $BASE__URL . '/tienda/' . ['json' => $nuevaTienda]);
+        $response = $client->request('POST', 'tiendas', [
+            'json' => $nuevaTienda
+        ]);
+
+        printResponse("3. POST /tienda - Crear tienda ", $response);
     } catch (RequestException $e) {
-        printError("4. POST - ERROR /tienda - Crear tienda ", $e);
+        printError("3. POST - ERROR /tienda - Crear tienda ", $e);
     }
 }
 
@@ -84,9 +88,13 @@ function pruebaEliminarTienda($BASE__URL, $client)
 {
     try {
         $tiendaId = "";
+        /*
+            $tiendaId = 4;
+            $response = $client->request('DELETE', '/tiendas/' . $tiendaId);
+        */
         $response = $client->request('DELETE', $BASE__URL . '/tienda/' . $tiendaId);
-        printResponse("5. DELETE /tienda - Eliminar tienda ", $response);
+        printResponse("4. DELETE /tienda - Eliminar tienda ", $response);
     } catch (RequestException $e) {
-        printError("5. DELETE -ERROR /tienda - Eliminar tienda ", $e);
+        printError("4. DELETE -ERROR /tienda - Eliminar tienda ", $e);
     }
 }

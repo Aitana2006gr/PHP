@@ -54,8 +54,38 @@
             </tr>
         </table>
     </form>
+    <h2>3. Obtener stock de un producto</h2>
+    <p>Método: GET | Endpoint: /producto/stock/{cod}</p>
+
+    <form id="form-get-stock-product">
+        <table>
+            <tr>
+                <td><label for="stock_producto_id">Código del producto:</label></td>
+                <td><input type="text" id="stock_producto_id" required></td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <button type="submit">Consultar stock</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+
+    <h2>3. Crear tienda</h2>
+    <form id="form-post-tienda">
+        <input type="text" id="tienda_nombre" placeholder="Nombre" required>
+        <input type="text" id="tienda_tlf" placeholder="Teléfono">
+        <button type="submit">Crear tienda</button>
+    </form>
+    <h2>4. Eliminar tienda</h2>
+    <form id="form-delete-tienda">
+        <input type="number" id="tienda_id" placeholder="ID tienda" required>
+        <button type="submit">Eliminar tienda</button>
+    </form>
+
     <script>
-        const BASE_URL = "http://localhost/PHP/ud7/tarea7/public";
+        //const BASE_URL = "http://localhost/PHP/ud7/tarea7/public"; //En clase
+        const BASE_URL = "http://localhost/GitHub/PHP/PHP/ud7/tarea7/public"; //En casa
         function limpiarMensajes() {
             document.getElementById('resultado').style.display = "none";
             document.getElementById('error').style.display = "none";
@@ -66,8 +96,8 @@
             document.getElementById('result-method').textContent = method;
             document.getElementById('result-status').textContent = status;
             //formatear el body
-            let body;
-            if (typeof bodyText === 'object') {
+            let bodyText;
+            if (typeof body === 'object') {
                 bodyText = JSON.stringify(body, null, 2);
             } else {
                 bodyText = body;
@@ -99,7 +129,7 @@
                 }
                 mostrarResultado(endpoint, method, response.status, responseBody);
             } catch (error) {
-                document.getElementById('error-message').textContent = mensaje;
+                document.getElementById('error-message').textContent = error.mensaje;
                 document.getElementById('error').style.display = "block";
                 window.scrollTo(0, 0);
             }
@@ -112,7 +142,36 @@
                 return;
             }
             hacerPeticion('/producto/' + productoId, 'GET');
-        })
+        });
+
+        document.getElementById('form-get-stock-product').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const productoId = document.getElementById('stock_producto_id').value;
+            if (!productoId) return;
+
+            hacerPeticion('/producto/stock/' + productoId, 'GET');
+        });
+
+
+        document.getElementById('form-post-tienda').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const nombre = document.getElementById('tienda_nombre').value;
+            const tlf = document.getElementById('tienda_tlf').value;
+
+            hacerPeticion('/tiendas', 'POST', {
+                nombre: nombre,
+                tlf: tlf
+            });
+        });
+
+        document.getElementById('form-delete-tienda').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const id = document.getElementById('tienda_id').value;
+            hacerPeticion('/tiendas/' + id, 'DELETE');
+        });
+
+
     </script>
 </body>
 

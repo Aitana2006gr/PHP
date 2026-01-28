@@ -1,0 +1,24 @@
+{
+    "name": "rrodriguez/pruebapirest",
+    "description": "Prueba API Rest",
+    "autoload": {
+        "psr-4": {
+            "Clases\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "rrodriguez",
+            "email": "roberto.rodriguez@educantabria.es"
+        }
+    ],
+    "require": {
+		"guzzlehttp/guzzle": "^7.0",
+        "monolog/monolog": "^3.10"
+	},
+	"config":{
+		"platform":{
+			"php":"8.1.10"
+		}
+	}
+}

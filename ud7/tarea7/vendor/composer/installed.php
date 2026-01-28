@@ -3,7 +3,7 @@
         'name' => 'daw212/tarea7',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '9d9a54dd9c6a5671b5785d9a3ddf9ba957740bbc',
+        'reference' => 'f8125448741f4efd88f3d08a52677c4a5b33c3c6',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         'daw212/tarea7' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '9d9a54dd9c6a5671b5785d9a3ddf9ba957740bbc',
+            'reference' => 'f8125448741f4efd88f3d08a52677c4a5b33c3c6',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
