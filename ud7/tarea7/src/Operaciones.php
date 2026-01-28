@@ -4,6 +4,8 @@ namespace Clases;
 
 use Clases\Producto;
 use Clases\Tienda;
+use Clases\Stock;
+use Clases\Familia;
 //Clase que recoge las peticiones Rest y utiliza las clases Producto y Familia
 //Todo esto es el controller
 
@@ -37,6 +39,19 @@ class Operaciones
                 if ($this->uri[1] === "producto" && $this->uri[2] === "stock" && isset($this->uri[3])) { //uri 1 es producto, uri 2 es stock y uri 3 es el codigo del producto
                     $response = $this->getStockProducto();
                 }
+                // if ($this->uri[1] === "producto" && $this->uri[2] === "stock" && isset($this->uri[3])) { //uri 1 es producto, uri 2 es stock y uri 3 es el codigo del producto
+                //     $response = $this->getAllProductos();
+                // }
+                if ($this->uri[1] === "tiendas") {
+                    $response = $this->getAllTiendas();
+                }
+                if ($this->uri[1] === "stock") {
+                    $response = $this->getStock();
+                }
+                if ($this->uri[1] === "familia") {
+                    $response = $this->getFamilias();
+                }
+
                 break;
             case 'POST':
                 if ($this->uri[1] === "tiendas") { //uri 1 es tiendas
@@ -46,6 +61,18 @@ class Operaciones
                 }
                 /*{ "nombre": "Aitana",
                 "tlf": "942616638"}*/
+                if ($this->uri[1] === "producto") {
+                    $response = $this->createProducto();
+                }
+                if ($this->uri[1] === "stock") {
+                    $response = $this->createStock();
+                }
+                break;
+
+            case 'PUT':
+                if ($this->uri[1] === "stock" && isset($this->uri[2]) && isset($this->uri[3])) {
+                    $response = $this->updateStock($this->uri[2], $this->uri[3]);
+                }
                 break;
 
             case 'DELETE':
@@ -55,9 +82,14 @@ class Operaciones
                 } else {
                     $response = $this->notFoundResponse("Not Found Response a borrarTienda");
                 }
+                if ($this->uri[1] === "producto" && isset($this->uri[2])) {
+                    $response = $this->deleteProducto($this->uri[2]);
+                }
                 break;
+
             case 'OPTIONS':
                 $response['status_code_header'] = 'HTTP/1.1 200 OK';
+
             default:
                 $response = $this->notFoundResponse("Not Found Response");
                 break;
@@ -149,7 +181,128 @@ class Operaciones
         $response['status_code_header'] = 'HTTP/1.1 200 OK';
         $response['body'] = json_encode(['message' => "Tienda $codTienda eliminada"]);;
         return $response;
+        /*
+        try {
+            $filasBorradas = $tienda->delete($codTienda);
+
+            if ($filasBorradas > 0) {
+                // Si existe y se borra
+                $response['status_code_header'] = 'HTTP/1.1 200 OK';
+                $response['body'] = json_encode([
+                    'message' => "Tienda $codTienda eliminada correctamente"
+                ]);
+            } else {
+                // Si no existía
+                $response['status_code_header'] = 'HTTP/1.1 404 Not Found';
+                $response['body'] = json_encode([
+                    'error' => "No existe ninguna tienda con código $codTienda"
+                ]);
+            }
+
+        } catch (\PDOException $e) {
+            // Error en la base de datos
+            $response['status_code_header'] = 'HTTP/1.1 500 Internal Server Error';
+            $response['body'] = json_encode([
+                'error' => 'Error al intentar eliminar la tienda',
+                'detalle' => $e->getMessage()
+            ]);
+        }
+
+        return $response;
+        */
     }
+
+
+    //EXTRA
+    private function getAllProductos()
+    {
+        $producto = new Producto();
+        $datos = $producto->findAll();
+        return [
+            'status_code_header' => 'HTTP/1.1 200 OK',
+            'body' => json_encode($datos)
+        ];
+    }
+
+    private function createProducto()
+    {
+        $producto = new Producto();
+        $input = json_decode(file_get_contents('php://input'), true);
+
+        if (!isset($input['nombre_corto'], $input['PVP'], $input['familia'])) {
+            return $this->unprocessableEntityResponse();
+        }
+
+        $producto->insert($input);
+        return [
+            'status_code_header' => 'HTTP/1.1 201 Created',
+            'body' => json_encode(['message' => 'Producto creado'])
+        ];
+    }
+
+    private function deleteProducto($cod)
+    {
+        $producto = new Producto();
+        $producto->delete($cod);
+
+        return [
+            'status_code_header' => 'HTTP/1.1 200 OK',
+            'body' => json_encode(['message' => 'Producto eliminado'])
+        ];
+    }
+
+
+    private function getStock()
+    {
+        $stock = new Stock();
+        return [
+            'status_code_header' => 'HTTP/1.1 200 OK',
+            'body' => json_encode($stock->findAll())
+        ];
+    }
+
+    private function createStock()
+    {
+        $stock = new Stock();
+        $input = json_decode(file_get_contents('php://input'), true);
+        $stock->insert($input);
+
+        return [
+            'status_code_header' => 'HTTP/1.1 201 Created',
+            'body' => json_encode(['message' => 'Stock insertado'])
+        ];
+    }
+
+    private function updateStock($producto, $tienda)
+    {
+        $stock = new Stock();
+        $input = json_decode(file_get_contents('php://input'), true);
+        $stock->update($producto, $tienda, $input['unidades']);
+
+        return [
+            'status_code_header' => 'HTTP/1.1 200 OK',
+            'body' => json_encode(['message' => 'Stock actualizado'])
+        ];
+    }
+    private function getFamilias()
+    {
+        $familia = new Familia();
+        return [
+            'status_code_header' => 'HTTP/1.1 200 OK',
+            'body' => json_encode($familia->findAll())
+        ];
+    }
+
+    public function getAllTiendas()
+    {
+        $tienda = new Tienda();
+        return [
+            'status_code_header' => 'HTTP/1.1 200 OK',
+            'body' => json_encode($tienda->findAll())
+        ];
+    }
+
+
 
     /*
     private function getProducto($codProducto)

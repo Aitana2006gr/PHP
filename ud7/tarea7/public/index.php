@@ -18,8 +18,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 }
 
 //eliminamos la parte del path que no corresponde a los puntos de entrada del API
-//$BASE_URI = "/PHP/ud7/tarea7/public"; //La url base en clase// Te recuerdo tmb tocar el $base_uri en el cliente guzzle.php
-$BASE_URI = "/GitHub/PHP/PHP/ud7/tarea7/public"; //La url base en casa
+$BASE_URI = "/PHP/ud7/tarea7/public"; //La url base en clase// Te recuerdo tmb tocar el $base_uri en el cliente guzzle.php
+//$BASE_URI = "/GitHub/PHP/PHP/ud7/tarea7/public"; //La url base en casa
 $parsedURI = parse_url($_SERVER["REQUEST_URI"]); //El request uri es toda la base uri mas lo que llega extra 
 $endpointName = str_replace($BASE_URI, "", $parsedURI["path"]); //Reemplaza la ruta base por espacio en blanco
 $uri = explode('/', $endpointName);
@@ -30,8 +30,9 @@ $uri = explode('/', $endpointName);
 //     exit();
 // }
 //Con esto se puede utilizar ya /producto/{id}, /producto/stock/{id} y /tiendas
-if (!in_array($uri[1], ['producto', 'tiendas'])) {
+if (!in_array($uri[1], ['producto', 'tiendas','stock','familia'])) {
     header("HTTP/1.1 404 Not Found");
+    echo json_encode(['error' => 'Endpoint no válido']); //Para mostrar un error si el endpoint no es válido
     exit();
 }
 

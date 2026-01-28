@@ -84,8 +84,8 @@
     </form>
 
     <script>
-        //const BASE_URL = "http://localhost/PHP/ud7/tarea7/public"; //En clase
-        const BASE_URL = "http://localhost/GitHub/PHP/PHP/ud7/tarea7/public"; //En casa
+        const BASE_URL = "http://localhost/PHP/ud7/tarea7/public"; //En clase
+        //const BASE_URL = "http://localhost/GitHub/PHP/PHP/ud7/tarea7/public"; //En casa
         function limpiarMensajes() {
             document.getElementById('resultado').style.display = "none";
             document.getElementById('error').style.display = "none";
@@ -148,7 +148,7 @@
             e.preventDefault();
 
             const productoId = document.getElementById('stock_producto_id').value;
-            if (!productoId) return;
+            if (!productoId) return ;
 
             hacerPeticion('/producto/stock/' + productoId, 'GET');
         });

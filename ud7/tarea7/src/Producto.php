@@ -117,4 +117,40 @@ class Producto extends Conexion
             exit($e->getMessage());
         }
     }
+    public function getAllProductos()
+    {
+        $producto = new Producto();
+        $datos = $producto->findAll();
+        return [
+            'status_code_header' => 'HTTP/1.1 200 OK',
+            'body' => json_encode($datos)
+        ];
+    }
+
+    public function createProducto()
+    {
+        $producto = new Producto();
+        $input = json_decode(file_get_contents('php://input'), true);
+
+        // if (!isset($input['nombre_corto'], $input['PVP'], $input['familia'])) {
+        //     return $this->unprocessableEntityResponse();
+        // }
+
+        $producto->insert($input);
+        return [
+            'status_code_header' => 'HTTP/1.1 201 Created',
+            'body' => json_encode(['message' => 'Producto creado'])
+        ];
+    }
+
+    public function deleteProducto($cod)
+    {
+        $producto = new Producto();
+        $producto->delete($cod);
+
+        return [
+            'status_code_header' => 'HTTP/1.1 200 OK',
+            'body' => json_encode(['message' => 'Producto eliminado'])
+        ];
+    }
 }

@@ -9,8 +9,8 @@ use GuzzleHttp\Exception\RequestException;
 | CONFIGURACIÓN
 |--------------------------------------------------------------------------
 */
-$BASE_URL = 'http://localhost/GitHub/PHP/PHP/ud7/tarea7/public/';
-
+//$BASE_URL = 'http://localhost/GitHub/PHP/PHP/ud7/tarea7/public/';
+$BASE_URL = "http://localhost/PHP/ud7/tarea7/public/";
 $client = new Client([
     'base_uri' => $BASE_URL,
     'timeout' => 5.0,

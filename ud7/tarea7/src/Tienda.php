@@ -80,6 +80,8 @@ class Tienda extends Conexion
             return $statement->rowCount();
         } catch (\PDOException $e) {
             exit($e->getMessage());
+            //throw $e;
         }
     }
+
 }

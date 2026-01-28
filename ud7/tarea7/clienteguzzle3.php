@@ -4,8 +4,8 @@ require 'vendor/autoload.php';
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 
-$BASE__URL = "http://localhost/GitHub/PHP/PHP/ud7/tarea7/public/";
-
+//$BASE__URL = "http://localhost/GitHub/PHP/PHP/ud7/tarea7/public/";
+$BASE__URL = "http://localhost/PHP/ud7/tarea7/public/";
 // Objeto cliente de la clase Guzzle
 $client = new Client([
     'base_uri' => $BASE__URL,
@@ -41,11 +41,7 @@ pruebaGetStock($BASE__URL, $client);
 pruebaCrearTienda($BASE__URL, $client);
 pruebaEliminarTienda($BASE__URL, $client);
 
-/*
-|--------------------------------------------------------------------------
-| PRUEBAS
-|--------------------------------------------------------------------------
-*/
+//PRUEBAS
 
 function pruebaGetProducto($BASE__URL, $client)
 {
